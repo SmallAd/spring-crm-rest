@@ -25,12 +25,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @PropertySource({"classpath:persistence-mysql.properties"})
 public class DemoAppConfig implements WebMvcConfigurer {
 
-    @Autowired
     private Environment env;
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    // define a bean for ViewResolver
+    @Autowired
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
+
     @Bean
     public DataSource myDataSource() {
 
