@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import testgroup.springdemo.model.Customer;
+import testgroup.springdemo.model.exception.CustomerNotFoundException;
 import testgroup.springdemo.service.CustomerService;
 
 /**
@@ -31,7 +32,13 @@ public class CustomerController {
     
     @GetMapping("/customers/{customerId}")
     public Customer getCustomer(@PathVariable int customerId){
-        return customerService.getCustomer(customerId);
+        Customer customer = customerService.getCustomer(customerId);
+        
+        if(customer == null){
+            throw new CustomerNotFoundException("Customer id not found - " + customerId);
+        }
+        
+        return customer;
     }
 
 }
